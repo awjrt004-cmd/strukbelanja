@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Struk Pembelian</title>
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 320px;
+      margin: auto;
+    }
+    .center { text-align: center; }
+    hr { border: 1px dashed #000; }
+  </style>
+</head>
+<body>
+
+<div class="center">
+  <h3 id="nama_toko">TOKO</h3>
+  <p id="alamat_toko"></p>
+  <p id="telp_toko"></p>
+</div>
+
+<hr>
+
+<p>ID: <span id="id_transaksi"></span></p>
+<p>Tanggal: <span id="tanggal"></span></p>
+
+<hr>
+
+<pre id="produk"></pre>
+
+<hr>
+
+<p>Total : Rp <span id="total"></span></p>
+<p>Tunai : Rp <span id="tunai"></span></p>
+<p>Kembali: Rp <span id="kembali"></span></p>
+
+<script>
+const p = new URLSearchParams(window.location.search);
+
+document.getElementById("nama_toko").innerText = p.get("nama_toko");
+document.getElementById("alamat_toko").innerText = p.get("alamat_toko");
+document.getElementById("telp_toko").innerText = p.get("telp_toko");
+document.getElementById("id_transaksi").innerText = p.get("id_transaksi");
+document.getElementById("tanggal").innerText = p.get("tanggal");
+document.getElementById("total").innerText = p.get("total");
+document.getElementById("tunai").innerText = p.get("tunai");
+document.getElementById("kembali").innerText = p.get("kembali");
+
+// produk (array dari AppSheet)
+const namaProduk = (p.get("nama_produk") || "").split(",");
+const harga = (p.get("harga_produk") || "").split(",");
+const qty = (p.get("qty") || "").split(",");
+const sub = (p.get("sub_total") || "").split(",");
+
+let output = "";
+for (let i = 0; i < namaProduk.length; i++) {
+  output += `${namaProduk[i]}\n${qty[i]} x ${harga[i]} = ${sub[i]}\n\n`;
+}
+document.getElementById("produk").innerText = output;
+</script>
+
+</body>
+</html>
