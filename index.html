@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Struk Belanja</title>
+</head>
+<body>
+
+<h2>STRUK BELANJA</h2>
+
+<p id="toko"></p>
+<p id="total"></p>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  document.getElementById("toko").innerText =
+    "Toko: " + (params.get("nama_toko") || "-");
+
+  document.getElementById("total").innerText =
+    "Total: " + (params.get("total") || "0");
+</script>
+
+</body>
+</html>
