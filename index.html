@@ -3,22 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <title>Struk Belanja</title>
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 320px;
+      margin: auto;
+      padding: 10px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+    .center {
+      text-align: center;
+    }
+    .line {
+      border-top: 1px dashed #000;
+      margin: 6px 0;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
 </head>
 <body>
 
-<h2>STRUK BELANJA</h2>
+<h2 id="nama_toko">TOKO</h2>
+<div class="center" id="alamat_toko"></div>
+<div class="center" id="telp_toko"></div>
 
-<p id="toko"></p>
-<p id="total"></p>
+<div class="line"></div>
+
+<div>ID: <span id="id_transaksi"></span></div>
+<div>Tanggal: <span id="tanggal"></span></div>
+
+<div class="line"></div>
+
+<div id="produk"></div>
+
+<div class="line"></div>
+
+<div class="row">
+  <strong>TOTAL</strong>
+  <strong id="total"></strong>
+</div>
+<div class="row">
+  <span>TUNAI</span>
+  <span id="tunai"></span>
+</div>
+<div class="row">
+  <span>KEMBALI</span>
+  <span id="kembali"></span>
+</div>
+
+<div class="line"></div>
+<div class="center">TERIMA KASIH</div>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
+  const p = new URLSearchParams(window.location.search);
 
-  document.getElementById("toko").innerText =
-    "Toko: " + (params.get("nama_toko") || "-");
+  const get = k => p.get(k) || "-";
 
-  document.getElementById("total").innerText =
-    "Total: " + (params.get("total") || "0");
+  document.getElementById("nama_toko").innerText = get("nama_toko");
+  document.getElementById("alamat_toko").innerText = get("alamat_toko");
+  document.getElementById("telp_toko").innerText = get("telp_toko");
+  document.getElementById("id_transaksi").innerText = get("id_transaksi");
+  document.getElementById("tanggal").innerText = get("tanggal");
+
+  document.getElementById("total").innerText = get("total");
+  document.getElementById("tunai").innerText = get("tunai");
+  document.getElementById("kembali").innerText = get("kembali");
+
+  const nama = (get("nama_produk")).split(",");
+  const harga = (get("harga_produk")).split(",");
+  const qty = (get("qty")).split(",");
+  const sub = (get("sub_total")).split(",");
+
+  let html = "";
+  for (let i = 0; i < nama.length; i++) {
+    html += `
+      <div class="row">
+        <span>${nama[i]} x${qty[i]}</span>
+        <span>${sub[i]}</span>
+      </div>
+    `;
+  }
+  document.getElementById("produk").innerHTML = html;
 </script>
 
 </body>
